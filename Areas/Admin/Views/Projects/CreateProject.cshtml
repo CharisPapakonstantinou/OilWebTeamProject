@@ -1,0 +1,48 @@
+﻿@model OilTeamProject.ViewModels.ProjectFormViewModel
+@{
+    ViewBag.Title = "CreateProject";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Create A Project</h2>
+
+@using (Html.BeginForm("CreateProject", "Projects"))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DepartmentId)
+        @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DueDate)
+        @Html.EditorFor(m => m.DueDate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.DueDate)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.StartingDate)
+        @Html.EditorFor(m => m.StartingDate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.StartingDate)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.EndDate)
+        @Html.EditorFor(m => m.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.EndDate)
+    </div>
+
+    <div class="form-group">
+        <div class="col-xs-12">
+            <br>
+            <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+            <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+        </div>
+    </div>
+
+}

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<OilTeamProject.Models.Employees.Assignment>
+@{
+    ViewBag.Title = "MyTodayProjects";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>My Today Not End Projects</h2>
+<ul>
+    @foreach (var assigment in Model)
+    {
+        <li>@assigment.Project.Description   <span><strong>DueDate:</strong></span> @assigment.Project.DueDate</li>
+    }
+
+</ul>
+

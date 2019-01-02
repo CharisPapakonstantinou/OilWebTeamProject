@@ -1,0 +1,74 @@
+﻿@model OilTeamProject.ViewModels.EmployeeFormViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Employees</h2>
+@using (Html.BeginForm("Search", "Employees"))
+{
+    <div class="form-group">
+        <div id="searchGigs" class="input-group">
+            @Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control", placeholder = "Search by Last Name, Role or Departe" })
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-search"></i>
+            </span>
+        </div>
+    </div>
+}
+<table class="table table-bordered table-hover">
+
+    <tr>
+        <th>Employees</th>
+        <th>Department</th>
+        <th>Role</th>
+        <th style="text-align:center">Details</th>
+    </tr>
+    <tbody>
+        @foreach (var employee in Model.Employees)
+        {
+
+            <tr>
+                <td>
+                    @Html.ActionLink(employee.FullName, "Edit", "Employees", new { id = employee.Id }, null)
+                </td>
+                <td>
+                    @employee.Department.Name
+                </td>
+                <td>
+                    @employee.Role.Name
+                </td>
+                <td>
+                    <div class="employee-details">
+
+                        <div class="tooltip">
+                            Contact
+                            <div class="tooltiptext tooltip-bottom">
+                                <span><i class="fas fa-mobile"></i> Mobile Phone:<br /> @employee.ContactDetails.MobilePhone</span><hr />
+                                <span><i class="fas fa-map"></i> City:<br /> @employee.ContactDetails.City</span><hr />
+                                <span><i class="fas fa-map-marker-alt"></i> Address:<br /> @employee.ContactDetails.Address</span><hr />
+                                <span><i class="far fa-info-square"></i> Postal Code:<br /> @employee.ContactDetails.PostalCode</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="employee-details">
+                        <div class="tooltip">
+                            Personal
+                            <div class="tooltiptext tooltip-bottom">
+                                <span>Sex: @employee.PersonalDetails.Sex</span><hr />
+                                <span>Age: @employee.PersonalDetails.Age</span><hr />
+                                <span>Family Status: @employee.PersonalDetails.CurrentFamilyStatus</span><hr />
+                                <span>Childrens: @employee.PersonalDetails.NumberOfChildren</span><hr />
+                                <span>SSN:@employee.PersonalDetails.SSN</span><hr />
+                                <span>Identity Card: @employee.PersonalDetails.IdentityCard</span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    @Html.ActionLink("Request Leave", "RequestLeave", new { id = employee.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

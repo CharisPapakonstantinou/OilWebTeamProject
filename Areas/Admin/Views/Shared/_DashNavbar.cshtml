@@ -1,0 +1,182 @@
+﻿<div class="col-md-2 sidebar">
+    <div class="sidebar-items">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-unstyled link-hover">
+                    <li>
+                        <a class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="img/following.png"></li>
+                                <li>
+                                    <h4>@Html.ActionLink("Home", "Index", new { area = "", controller = "Home" })</h4>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="sidebar-link-color" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>@Html.ActionLink("Products", "Index", "Products")</h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="sidebar-link-color" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>@Html.ActionLink("Categories", "Index", "Categories")</h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>Customers</h4>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="img/recent.png"></li>
+                                <li>
+                                    <a class="sidebar-link-color link-hover" href="#">
+                                        <ul class="list-inline list-unstyled sidebar-link">
+                                            <li><img alt="" src="img/recent.png"></li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><h4>Employee</h4><span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <ul class="employee-details">
+                                                            <li class="glyphicon glyphicon-edit">@Html.ActionLink("Add Employee", "Create", "Employees")</li>
+                                                            <li class="glyphicon glyphicon-fullscreen">@Html.ActionLink("All Employees", "Index", "Employees")</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li>
+                                                        <ul>
+                                                            <li>@Html.ActionLink("Evaluations", "Index", "Evaluations")</li>
+                                                            <li>@Html.ActionLink("Performances", "Create", "Performances")</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li>
+                                                        <ul>
+                                                            <li class="glyphicon glyphicon-search">@Html.ActionLink("Search Shift", "Index", "Shifts")</li>
+                                                            <li class="glyphicon glyphicon-edit">@Html.ActionLink("Create Shifts", "AddAWorkWeek", "Shifts")</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li>
+                                                        <ul>
+                                                            <li class="glyphicon glyphicon-fullscreen">@Html.ActionLink("All projects", "Index", "Projects")</li>
+                                                            <li class="glyphicon glyphicon-edit">@Html.ActionLink("Create Project", "CreateProject", "Projects")</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>@Html.ActionLink("Packages", "Index", "Packages")</h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>@Html.ActionLink("Raw Materials", "Index", "RawMaterials")</h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>Package Stock</h4>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="img/recent.png"></li>
+                                <li><h4>@Html.ActionLink("Suppliers", "Index", "Suppliers")</h4></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="img/recent.png"></li>
+                                <li><h4>@Html.ActionLink("Order to Suppliers", "Index", "OrderToSuppliers")</h4></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>Evaluation</h4>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>Orders</h4>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>Warehouse</h4>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="sidebar-link-color link-hover" href="#">
+                            <ul class="list-inline list-unstyled sidebar-link">
+                                <li><img alt="" src="../img/folder-md.png"></li>
+                                <li>
+                                    <h4>@Html.ActionLink("Messages", "Index", "Messages")&nbsp;<span class="badge label label-success">12</span></h4>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+﻿@model  IEnumerable<OilTeamProject.Models.Employees.Project>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Index</h2>
+<ul>
+    @foreach (var project in Model)
+    {
+       <li>
+           @project.Description @project.DueDate @project.DepartmentId |
+           @Html.ActionLink("Assign an Employee", "Index", "Assigments", new { id = project.Id }, null) |
+           @Html.ActionLink("Project Details", "Details", "Projects", new { id = project.Id }, null)
+
+       </li>
+    }
+</ul>

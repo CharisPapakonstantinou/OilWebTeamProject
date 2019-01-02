@@ -1,0 +1,22 @@
+﻿@model IEnumerable<OilTeamProject.Models.Employees.Project>
+@{
+    ViewBag.Title = "TodayProjectsFromDepartment";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Today Projects From Department</h2>
+
+<table>
+    <tr>
+        <td>Project Description</td>
+        <td>Due Date</td>
+    </tr>
+
+    @foreach (var project in Model)
+    {
+        <tr>
+            <td>@project.Description</td>
+            <td>@project.DueDate</td>
+        </tr>
+    }
+</table>

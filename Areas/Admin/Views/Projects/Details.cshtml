@@ -1,0 +1,17 @@
+﻿@model OilTeamProject.ViewModels.ProjectDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>@Model.Project.Description Details</h2>
+<strong>Due Date: </strong> @Model.Project.DueDate
+
+<h4>Employess to current Project</h4>
+<ul>
+    @foreach (var employee in Model.ProjectsEmployees)
+    {
+        <li>@employee.Employee.FullName</li>
+    }
+</ul>
+

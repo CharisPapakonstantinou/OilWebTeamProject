@@ -1,0 +1,23 @@
+﻿@model OilTeamProject.Models.Suppliers.OrderToSupplier
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Delete Order</h2>
+
+<h3>Are you sure you want to delete this order ?</h3>
+<p>There is no comeback.</p>
+<div>
+  
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

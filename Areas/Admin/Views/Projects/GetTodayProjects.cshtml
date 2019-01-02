@@ -1,0 +1,16 @@
+﻿@model OilTeamProject.ViewModels.ProjectFormViewModel
+@{
+    ViewBag.Title = "GetTodayProjects";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Get Departments Project Which Are Proccess Today</h2>
+
+@using (Html.BeginForm("TodayProjectsByDepartment", "Projects"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Departments)
+        @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name", new { @class = "form-control" }))
+    </div>
+    <button class="btn btn-primary">Submit</button>
+}

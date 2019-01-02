@@ -1,0 +1,163 @@
+﻿@model OilTeamProject.Models.Products.Product
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Product</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Slug, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Slug, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Slug, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Featured, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Featured)
+                    @Html.ValidationMessageFor(model => model.Featured, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BarCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BarCode, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BarCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                <img id="thumb" width="100" src="../../../Image/@Url.Content(Model.Thumbnail)" alt="Image" />
+                @Html.HiddenFor(model => model.Thumbnail)
+
+                <input id="image_file" type="file" name="ImageFile" />
+                @Html.ValidationMessageFor(model => model.Thumbnail, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3"><a id="delete" href="#" class="text-danger pull-left">Delete &#10060;</a></div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="PicFile" multiple />
+                @Html.ValidationMessageFor(model => model.Images, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PackageID, "PackageID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PackageID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PackageID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.Discount);
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<div class="container">
+
+    <h3>Gallery Images</h3>
+    <ul class="list-unstyled list-inline">
+
+        @foreach (var pic in Model.Images)
+        {
+            <li>
+                <a data-target="#pic-@pic.ID" data-toggle="tab">
+                    <span class="span-delete">&#10060;</span>
+                    <img id="@pic.ID" width="150" src="../../../Image/@Url.Content(pic.Title)" />
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $("#delete").click(function () {
+                $("#thumb").attr('src', '../../../Image/na_image.jpg');
+                $("#thumb").attr('width', '180');
+                $("#Thumbnail").attr('value', 'na_image.jpg');
+            });
+
+            $(".span-delete").click(function () {
+                if (confirm("Are you sure you want to delete this item?")) {
+                    $(this).parent().fadeOut();
+                    var id = $(this).parent().find("img").attr("id");
+                    var url = window.location.protocol + "//" + window.location.host + "/products/DeleteGalleryImage/" + id;
+                    console.log(id);
+                    console.log(url);
+                    $.post(url, function (data) { })
+                        .done(function (data) {
+                            setTimeout(function () {
+                                toastr.success('Image Successfully deleted!')
+                            }, 1000);
+                        })
+                        .fail(function () {
+                            toastr.error('Something went wrong!')
+                        });
+                }
+            });
+
+        });
+    </script>
+}

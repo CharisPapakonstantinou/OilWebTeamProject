@@ -1,0 +1,35 @@
+﻿@model OilTeamProject.Models.Employees.Employee
+
+@{
+    ViewBag.Title = "MyProjects";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>My Projects</h2>
+<h4>@Model.FullName</h4>
+
+<div>
+    @foreach (var assignment in Model.Assignments)
+    {
+        <hr />
+        <div>
+            @assignment.Project.Description
+        </div>
+        <div>
+            @assignment.Project.DueDate
+        </div>
+        if (assignment.Project.StartingDate != null)
+        {
+            <div>
+                @assignment.Project.StartingDate
+            </div>
+        }
+        if (assignment.Project.EndDate != null)
+        {
+            <div>
+                @assignment.Project.EndDate
+            </div>
+
+        }
+    }
+</div>

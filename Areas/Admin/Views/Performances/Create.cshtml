@@ -1,0 +1,103 @@
+﻿@model OilTeamProject.ViewModels.PerformanceData
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Create New Performance</h2>
+
+@using (Html.BeginForm("Create", "Performances"))
+{
+    @Html.AntiForgeryToken()
+
+    if (Model.ExistingPerformance == true)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                X
+            </button>
+            Performance already exists
+        </div>
+    }
+    <div>
+        <div class="form-group">
+            @Html.ActionLink("Create New Form", "Create", "Forms")
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Form, "Form Type", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.DropDownListFor(model => model.FormId, new SelectList(Model.Forms, "ID", "Theme"), "Select", htmlAttributes: new { onchange = @"CallChangefunc(this.value)", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Form, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.FormId)
+            
+            <script>
+                function CallChangefunc(val) {
+                    window.location.href = " /Admin/Performances/Create?formId=" + val;
+                }
+            </script>
+
+
+        </div>
+
+        @*<div class="form-group">
+            @Html.DropDownListFor(model => model.FormId, new SelectList(Model.Forms, "ID", "Theme"), "Select", htmlAttributes: new { onchange = @"CallChangefunc(this.value)", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Form, "", new { @class = "text-danger" })
+            <script>
+                function CallChangefunc(val) {
+                    window.location.href = " /Performances/Create?formId=" + val;
+                }
+            </script>
+
+        </div>*@
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.Employee, "Employee", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.DropDownListFor(model => model.Employee.Id, new SelectList(Model.Employees, "ID", "FullName"), "Select", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Employee, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Employee.Id)
+            
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Evaluation, "Evaluation", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.DropDownListFor(model => model.Evaluation.ID, new SelectList(Model.Evaluations, "ID", "EvaluationDate"), "Select", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Evaluation, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Evaluation.ID)
+            
+        </div>
+
+        <div class="form-group">
+            @if (Model.FormId != 0)
+            {
+                <table>
+                    @for (int i = 0; i < Model.Questions.Count(); i++)
+                    {
+
+                        <tr class="form-group">
+                            <td class="form-group col-md-4">
+                                @Html.DisplayFor(m => m.Questions[i].Text, new { @class = "control-label col-sm-4" }) @Html.HiddenFor(m => m.Questions[i].ID)
+                            </td>
+                            <td class="form-group col-md-6">
+                                @Html.EnumDropDownListFor(a => a.Answers[i].QuestionAnswer, "Select", new { @class = "form-control" })<br />
+                                @Html.ValidationMessageFor(model => model.Answers, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+            }
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+}
+
+
+

@@ -1,0 +1,34 @@
+﻿@model OilTeamProject.ViewModels.WorkDayViewModel
+@{
+    ViewBag.Title = "Custom Schedule";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Custom Schedule</h2>
+@using (Html.BeginForm("AddAWorkWeek", "Shifts"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group">
+        @Html.LabelFor(m => m.WorkDate)
+        @Html.EditorFor(m => m.WorkDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.WorkDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DepartmentId)
+        @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), "Select", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DepartmentId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.NumberOfWorkDays)
+        @Html.EditorFor(m => m.NumberOfWorkDays, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumberOfWorkDays)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.NumbersOfShifts)
+        @Html.EditorFor(m => m.NumbersOfShifts, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumbersOfShifts)
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg">Save</button>
+}

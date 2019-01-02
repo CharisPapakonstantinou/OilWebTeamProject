@@ -1,0 +1,176 @@
+﻿@model OilTeamProject.ViewModels.EvaluationsData
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Evaluations</h2>
+
+<p>
+    <style>
+        #chart_container {
+            width: 600px;
+            height: 301px;
+            border: 1px solid #ddd;
+            padding: 1px;
+            border-radius: 4px;
+        }
+    </style>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            StartDate
+        </th>
+        <th>
+            EndDate
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Evaluations)
+    {
+
+        string selectedRow = "";
+        if (item.ID == ViewBag.EvaluationID)
+        {
+            selectedRow = "success";
+        }
+
+
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.StartEvaluationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndEvaluationDate)
+            </td>
+
+            <td>
+                @Html.ActionLink("Select", "Index", new { id = item.ID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+@if (Model.Performances != null)
+{
+    <h3>Performances</h3>
+    <table class="table table-bordered">
+        <tr>
+            <th></th>
+            <th>Employee Name</th>
+            <th>Date</th>
+            <th>Rating</th>
+        </tr>
+
+        @foreach (var item in Model.Performances)
+        {
+            string selectedRow = "";
+            if (item.ID == ViewBag.PerformanceID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Select", "Index", new { performanceID = item.ID })
+                </td>
+                <td>
+                    @item.Employee.FullName
+                </td>
+                <td>
+                    @item.DateEvaluated
+                </td>
+                <td>
+                    @item.OveralRating%
+                </td>
+            </tr>
+        }
+    </table>
+
+    if (Model.Questions != null)
+    {
+        <h3>Questions</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+            </tr>
+            @foreach (var item in Model.Questions)
+            {
+                <tr>
+                    <td>
+                        @item.Text
+                    </td>
+                    <td>
+                        @item.AnswersForAQuestion.QuestionAnswer
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    if (ViewBag.listOfRatings != null)
+    {
+        <div id="chart_container" >
+            
+            <canvas id="bar_chart"></canvas>
+        </div>
+    }
+
+
+}
+@section scripts
+{
+    <script>
+        var ratings = @Html.Raw(Json.Encode(ViewBag.listOfRatings));
+        var evaluations = @Html.Raw(Json.Encode(ViewBag.EvaluationsId));
+
+        var ctx = $("#bar_chart")
+        var bacChart = new Chart(ctx, {
+
+            type: 'bar',
+            data: {
+                labels: evaluations,
+                datasets: [{
+                    label: "Bar Chart",
+                    data: ratings,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                maintainAspect: false,
+                scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
+                legend: { display: false }
+            },
+
+
+
+
+        });
+    </script>
+
+
+}
+
+
+

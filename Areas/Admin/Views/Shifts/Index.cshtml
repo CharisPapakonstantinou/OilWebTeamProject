@@ -1,0 +1,29 @@
+﻿@model OilTeamProject.ViewModels.GetWorkDayViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("GetWorkDay", "Shifts"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="shift-selector-place">
+        <div class="shift-selector shift-datetime-selector">
+            <label>Choose Date</label>
+            <div class="input-date-shift-selector">@Html.EditorFor(m => m.Datetime, new { @class = "form-control" })</div>
+            @Html.ValidationMessageFor(m => m.Datetime)
+        </div>
+
+        <div class="shift-selector shift-department-selector">
+            <label>Choose Department:</label>
+            <div class="input-department-shift-selector">@Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control" })</div>
+            @Html.ValidationMessageFor(m => m.DepartmentId)
+        </div>
+        <div class="clearfix"></div>
+        <button class="btn btn-primary">Show Shifts</button>
+    </div>
+
+}

@@ -1,0 +1,77 @@
+﻿@model OilTeamProject.Models.Suppliers.OrderToSupplier
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrderToSupplier</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @*@Html.DisplayNameFor(model => model.Supplier.Name)*@
+            Supplier Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        @if (Model.RawMaterial != null)
+        {
+            <dt>
+                Rawmaterial
+            </dt>
+
+            <dd>
+                @Model.RawMaterial.Name
+            </dd>
+        }
+
+        @if (ViewBag.ShowPackageName == true)
+        {
+            <dt>
+                Package Name
+            </dt>
+
+            <dd>
+                @ViewBag.PackageName
+            </dd>
+        }
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

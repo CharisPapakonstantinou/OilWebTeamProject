@@ -1,0 +1,25 @@
+﻿@model OilTeamProject.Models.Employees.Employee
+
+@{
+    ViewBag.Title = "MyShifts";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>My Shifts</h2>
+<h4>@Model.FullName</h4>
+
+<div>
+    @foreach (var work in Model.Works)
+    {
+        <hr />
+        <div>
+            @work.Shift.DateTime
+        </div>
+        <div>
+            @work.Shift.ShiftType.Name
+        </div>
+        <div>
+            <strong>View this shift's Projects</strong>
+        </div>
+    }
+</div>

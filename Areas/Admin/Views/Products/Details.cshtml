@@ -1,0 +1,149 @@
+﻿@model OilTeamProject.Models.Products.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Details</h2>
+
+
+<ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#home">Product</a></li>
+    <li><a data-toggle="pill" href="#menu1">Raw Material</a></li>
+    <li><a data-toggle="pill" href="#menu2">Orders</a></li>
+    <li><a data-toggle="pill" href="#menu3">Product Stock</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <div>
+            <h4>Product</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Category.Name)
+                </dd>
+
+                <dt>
+                    Package
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Package.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Slug)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Slug)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Discount)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Discount)
+                </dd>
+
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+
+                <dd>
+                    &euro; @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.DiscountedPrice)
+                </dt>
+
+                <dd>
+                    &euro; @Html.DisplayFor(model => model.DiscountedPrice)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.Raw(Model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Featured)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Featured)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BarCode)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BarCode)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Thumbnail)
+                </dt>
+
+                <dd>
+                    <img width="200" src="../../../Image/@Url.Content(Model.Thumbnail)" class="center">
+                </dd>
+
+            </dl>
+        </div>
+
+        <div class="container">
+
+            <h3>Gallery Images</h3>
+            <ul class="list-unstyled list-inline">
+                @foreach (var pic in ViewBag.Images)
+                {
+                    <li>
+                        <a data-target="#pic-@pic.ID" data-toggle="tab">
+                            <img id="@pic.ID" width="150" src="../../../Image/@Url.Content(pic.Title)" />
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        Raw Material Details
+    </div>
+    <div id="menu2" class="tab-pane fade">
+        Order Details (i.e how much orders this product had)
+    </div>
+    <div id="menu3" class="tab-pane fade">
+        Product Stock Details
+    </div>
+</div>
+
+
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

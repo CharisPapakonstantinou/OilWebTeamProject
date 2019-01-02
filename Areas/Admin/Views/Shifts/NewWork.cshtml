@@ -1,0 +1,40 @@
+﻿@model OilTeamProject.ViewModels.AssignShiftEmployeesViewModel
+
+@{
+    ViewBag.Title = "AssignEmployeesToShift";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Assign Employees To Shift</h2>
+
+@using (Html.BeginForm("NewWork", "Shifts"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Shift.Id)
+    <div>
+        @Model.Shift.DateTime
+    </div>
+    <div>
+        @Model.Shift.Department.Name
+    </div>
+    <div>
+        @Model.Shift.ShiftType.Name
+    </div> <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.EmployeeId)
+        @Html.DropDownListFor(m => m.EmployeeId, new SelectList(Model.Employees, "Id", "FullName"), "Select", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EmployeeId)
+    </div>
+
+    <button class="btn btn-primary">Submit</button>
+    <ul>
+        @foreach (var employee in Model.WorkingEmployees)
+        {
+            <li>
+                @employee.FullName
+            </li>
+
+        }
+    </ul>
+}

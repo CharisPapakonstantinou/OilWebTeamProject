@@ -1,0 +1,84 @@
+﻿@model IEnumerable<OilTeamProject.Models.Suppliers.OrderToSupplier>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Order To Suppliers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Supplier)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        @*<th>
+           Package Name
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.RawMaterial.Name)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderHasBeenReceived)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supplier.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Packages.SingleOrDefault(p => p.ID == item.PackageId).)Name)
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.RawMaterial.Name)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+
+        @if (item.OrderHasBeenReceived)
+        {
+            
+
+            <td>
+                @Html.CheckBoxFor(modelItem => item.OrderHasBeenReceived)
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.CheckBoxFor(modelItem => item.OrderHasBeenReceived)
+            </td>
+        }
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,167 @@
+﻿@model OilTeamProject.ViewModels.GetWorkDayViewModel
+@{
+    ViewBag.Title = "GetWorkDay";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>GetWorkDay</h2>
+
+@using (Html.BeginForm("GetWorkDay", "Shifts"))
+{
+    @Html.AntiForgeryToken()
+
+    <span id="currentshiftdatetime" hidden>@Model.Datetime.ToString("MM/dd/yyyy")</span>
+    <span id="currentshiftdepartment" hidden>@Model.DepartmentId</span>
+
+    <div class="shift-selector-place">
+        <div class="shift-selector shift-datetime-selector">
+            <label>Choose Date</label>
+            <div class="input-date-shift-selector">@Html.EditorFor(m => m.Datetime, new { @class = "form-control" })</div>
+            @Html.ValidationMessageFor(m => m.Datetime)
+        </div>
+
+        <div class="shift-selector shift-department-selector">
+            <label>Choose Department:</label>
+            <div class="input-department-shift-selector">@Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control" })</div>
+            @Html.ValidationMessageFor(m => m.DepartmentId)
+        </div>
+        <div class="clearfix"></div>
+        <button class="btn btn-primary">Show Shifts</button>
+    </div>
+
+    <div>Add An Employee to Shift</div>
+    <div class="shift-type">
+        <div class="input-shifttype-selector">@Html.DropDownListFor(m => m.ShiftTypeId, new SelectList(Model.ShiftTypes, "Id", "Name"), new { @id = "current-shift-type" })</div>
+        <div class="input-employee-selector">@Html.DropDownListFor(m => m.EmployeeId, new SelectList(Model.Employees, "Id", "FullName"), new { @id = "current-employeeid" })</div>
+        <span class="col-md-12 col-lg-12"><a href="#" class="js-add-work" data-addwork-id="">Add Employee</a></span>
+    </div>
+
+    <div class="WorkDay">
+        <h2>Shifts Of Department: @Model.DepartemtName</h2>
+        <h3>@Model.Datetime.ToString("dddd, dd MMMM yyyy")</h3>
+        <table class="table-bordered shifts-table">
+            <tr>
+                @foreach (var shift in Model.Shifts)
+                {
+                    <td>
+                        <span class="shift-title">@shift.ShiftType.Name</span>
+
+                        <ul class="shift-employees">
+                            @foreach (var work in shift.Works)
+                            {
+                                <li>
+                                    <div class="shift-employee-name">@work.Employee.FullName</div>
+                                    <div class="shift-actions">
+                                        <span class="col-md-6 col-lg-6"><a href="#" class="js-cancel-work" data-employee-id="@work.ShiftId.ToString() @work.Employee.Id.ToString()" data-shift-id="@shift.Id">Cancel</a></span>
+                                        <span class="col-md-6 col-lg-6">Assign Projects</span>
+                                    </div>
+                                </li>
+
+                            }
+                        </ul>
+                    </td>
+                }
+            </tr>
+        </table>
+    </div>
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".js-cancel-work").click(function (e) {
+                var link = $(e.target);
+
+                bootbox.dialog({
+                    title: 'Confirm',
+                    message: "Are you sure you want to delete this Employee from this Shift?",
+                    buttons: {
+                        no: {
+                            label: "No",
+                            className: 'btn-default',
+                            callback: function () {
+                                bootbox.hideAll();
+                            }
+                        },
+                        yes: {
+                            label: "Yes",
+                            className: 'btn-danger',
+                            callback: function () {
+                                $.ajax({
+                                    url: "/api/shifts/" + link.attr("data-employee-id"),
+                                    method: "DELETE"
+                                })
+                                    .done(function () {
+                                        link.parents("li").fadeOut(function () {
+                                            this.remove();
+                                        });
+                                    })
+                                    .fail(function () {
+                                        alert("Something Failed.")
+                                    });
+                            }
+                        }
+                    }
+                });
+            });
+
+            $(".js-add-work").click(function (e) {
+
+                var employeeId = document.getElementById("current-employeeid").value;
+                var shiftTypeId = document.getElementById("current-shift-type").value;
+                var shiftDateId = document.getElementById("currentshiftdatetime").innerHTML;
+                var newStr = shiftDateId.replace("/", " ");
+                var newStr = newStr.replace("/", " ");
+
+                var shiftDepartmentId = document.getElementById("currentshiftdepartment").innerHTML;
+
+                console.log(employeeId);
+                console.log(typeof employeeId);
+                console.log(shiftTypeId);
+                console.log(typeof shiftTypeId);
+                console.log(newStr);
+                console.log(typeof newStr);
+                console.log(shiftDepartmentId);
+                console.log(typeof shiftDepartmentId);
+
+                var myId = employeeId + " " + shiftTypeId + " " + shiftDepartmentId + " " + newStr;
+                console.log(myId);
+                console.log(typeof myId);
+
+                var link = $(e.target);
+
+                bootbox.dialog({
+                    title: 'Confirm',
+                    message: "Are you sure you want to Add this Employee To This Shift Type?",
+                    buttons: {
+                        no: {
+                            label: "No",
+                            className: 'btn-default',
+                            callback: function () {
+                                bootbox.hideAll();
+                            }
+                        },
+                        yes: {
+                            label: "Yes",
+                            className: 'btn-danger',
+                            callback: function () {
+                                $.ajax({
+                                    url: "/api/shifts/" + myId,
+                                    method: "POST"
+                                })
+                                    .done(function () {
+                                        location.reload();
+                                    })
+                                    .fail(function () {
+                                        alert("Something Failed.")
+                                    });
+                            }
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+}

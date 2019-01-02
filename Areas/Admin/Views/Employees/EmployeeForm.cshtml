@@ -1,0 +1,170 @@
+﻿@model OilTeamProject.ViewModels.EmployeeFormViewModel
+@{
+    ViewBag.Title = Model.Heading;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<hr>
+<div class="container bootstrap snippet">
+    <div class="row">
+        <div class="col-sm-10"><h1>@Model.FirstName @Model.LastName</h1></div>
+        <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="https://www.prismhr.com/wp-content/uploads/2017/07/hiring-1-300x300.png"></a></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <!--left col-->
+            @Html.AntiForgeryToken()
+            <div class="text-center">
+                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                <h6>Upload a different photo...</h6>
+                <input type="file" class="text-center center-block file-upload">
+            </div></hr><br>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">My Actions <i class="fa fa-link fa-1x"></i></div>
+                <div>  @Html.ActionLink("My upcoming Shifts", "MyShifts", new { id = Model.Id })</div>
+                <div>  @Html.ActionLink("My Leaves", "MyLeaves", new { id = Model.Id })</div>
+                <div>  @Html.ActionLink("My Projects", "MyProjects", new { id = Model.Id })</div>
+                <div>  @Html.ActionLink("My Today Projects", "MyTodayProject","Project", new { id = Model.Id },null)</div>
+                <div> My Evaluations</div>
+            </div>
+
+            <ul class="list-group">
+                <li class="list-group-item text-muted">Statistics <i class="fa fa-dashboard fa-1x"></i></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Remaining Days Of Leave</strong></span> @Model.RemainingDaysOfLeave</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Shifts</strong></span> @Model.NumberOfShifts</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Projects</strong></span> @Model.NumberOfProjects</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Evaluation Grade</strong></span> 78 %</li>
+            </ul>
+        </div><!--/col-3-->
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">Edit</a></li>
+                <li><a data-toggle="tab" href="#messages">Announcements</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                    <hr>
+                    @using (Html.BeginForm("Update", "Employees"))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                @Html.LabelFor(m => m.FirstName)
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.FirstName)
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                @Html.LabelFor(m => m.LastName)
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.LastName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                @Html.LabelFor(m => m.DepartmentId)
+                                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.DepartmentId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                @Html.LabelFor(m => m.RoleId)
+                                @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.Roles, "Id", "Name"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.RoleId)
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-xs-6">
+                                @Html.LabelFor(m => m.Salary)
+                                @Html.TextBoxFor(m => m.Salary, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Salary)
+                            </div>
+                        </div>
+                        <div>
+                            <br />
+                            <h4>Contact Details</h4>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    @Html.LabelFor(m => m.ContactDetails.MobilePhone)
+                                    @Html.TextBoxFor(m => m.ContactDetails.MobilePhone, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ContactDetails.MobilePhone)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    @Html.LabelFor(m => m.ContactDetails.Address)
+                                    @Html.TextBoxFor(m => m.ContactDetails.Address, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ContactDetails.Address)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    @Html.LabelFor(m => m.ContactDetails.City)
+                                    @Html.TextBoxFor(m => m.ContactDetails.City, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ContactDetails.City)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    @Html.LabelFor(m => m.ContactDetails.PostalCode)
+                                    @Html.TextBoxFor(m => m.ContactDetails.PostalCode, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ContactDetails.PostalCode)
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4>Personal Details</h4>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    @Html.LabelFor(m => m.PersonalDetails.Sex)
+                                    @Html.EnumDropDownListFor(m => m.PersonalDetails.Sex, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.PersonalDetails.Sex)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    @Html.LabelFor(m => m.PersonalDetails.DateOfBirth)
+                                    @Html.EditorFor(m => m.PersonalDetails.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.PersonalDetails.DateOfBirth)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    @Html.LabelFor(m => m.PersonalDetails.CurrentFamilyStatus)<br />
+                                    @Html.EnumDropDownListFor(m => m.PersonalDetails.CurrentFamilyStatus, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.PersonalDetails.CurrentFamilyStatus)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    @Html.LabelFor(m => m.PersonalDetails.NumberOfChildren)
+                                    @Html.TextBoxFor(m => m.PersonalDetails.NumberOfChildren, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.PersonalDetails.NumberOfChildren)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <br>
+                                <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+                                <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                            </div>
+                        </div>
+                    }
+
+                    <hr>
+                </div><!--/tab-pane-->
+            </div>
+        </div><!--/tab-pane-->
+    </div><!--/tab-content-->

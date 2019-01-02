@@ -1,0 +1,36 @@
+﻿@model OilTeamProject.ViewModels.EvaluationsData
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>Create New Form</h2>
+
+@using (Html.BeginForm("Create", "Forms"))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.Form)
+        @Html.TextBoxFor(m => m.Form.Theme, new { @class = "form-control", autofocus = "autofocus" })
+    </div>
+    foreach (var item in Model.SelectedQuestions)
+    {     
+               
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"
+                       name="CheckedQuestions"
+                       value="@item.Value" /> @item.Text
+                      
+            </label>
+        </div>
+    }    
+    <button>
+         @Html.ActionLink("Create New Question", "Create", "Questions")
+    </button>
+    <br />
+    <button type="submit" class="btn btn-primary">Save</button>        
+}
+
+
+
