@@ -1,0 +1,4 @@
+﻿@model OilTeamProject.ViewModels.CartViewModel
+<i class="fas fa-cart-plus"></i>
+Your cart: @Model.Quantity item(s) - &euro;@Model.GrandTotal
+@Html.ActionLink("Checkout", "Index")

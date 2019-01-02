@@ -1,0 +1,51 @@
+﻿@model IEnumerable<OilTeamProject.ViewModels.StatisticsViewModel>
+@{
+    ViewBag.Title = "Statistics";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p> Main Page Of Statistics.</p>
+@using (Html.BeginForm("ExportToExcel", "Statistics", FormMethod.Post))
+{
+    <tr class="text-right">
+        <td>
+            <br />
+            <br />
+            <input type="submit" value="Export to Excel" class="button" />
+        </td>
+    </tr>
+    <table class="table table-bordered">
+        <tr>
+            <th class="text-center">@Html.ActionLink("Customers Name", "Customers", new { sortOrder = ViewBag.NameSortParm })</th>
+            <th class="text-center">@Html.ActionLink("Total Orders", "Customers", new { sortOrder = ViewBag.TotalOrders })</th>
+            <th class="text-center">@Html.ActionLink("Total Orders Cost Summary", "Customers", new { sortOrder = ViewBag.TotalOrderCost })</th>
+            <th class="text-center">@Html.ActionLink("Orders Status Fullfilled", "Customers", new { sortOrder = ViewBag.StatusTypeFullfilled })</th>
+            <th class="text-center">@Html.ActionLink("Orders Status Pending", "Customers", new { sortOrder = ViewBag.StatusTypeInProgress })</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">
+                    @item.Customer.FullName
+                </td>
+                <td class="text-center">
+                    @item.TotalOrders
+                </td>
+                <td class="text-center">
+                    @item.TotalOrderCost
+                </td>
+                <td class="text-center">
+                    @item.StatusTypeFullfilled
+                </td>
+                <td class="text-center">
+                    @item.StatusTypeInProgress
+                </td>
+            </tr>
+
+        }
+
+    </table>
+}
+
+

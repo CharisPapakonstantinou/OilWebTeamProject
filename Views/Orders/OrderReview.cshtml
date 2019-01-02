@@ -1,0 +1,153 @@
+﻿@model OilTeamProject.ViewModels.OrderDetailsFormViewModel
+
+@{
+    ViewBag.Title = "OrderReview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>OrderReview</h2>
+
+<h3>@Html.DisplayFor(m => m.OrderNumber)</h3>
+<h3>@Html.DisplayFor(m => m.OrderDate)</h3>
+@using (Html.BeginForm("ConfirmOrder", "Orders"))
+{
+
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Product Discription
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Add to Cart
+            </th>
+
+
+        </tr>
+        @Html.HiddenFor(M => M.OrderId)
+        @Html.HiddenFor(M => M.OrderDate)
+        @Html.HiddenFor(m => m.Count)
+        @Html.HiddenFor(m => m.CustomerId)
+        @Html.HiddenFor(m => m.OrderNumber)
+        @Html.HiddenFor(m => m.OrderDate)
+        @for (int i = 0; i < Model.Count; i++)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => m.ProductNames[i])
+                    @Html.HiddenFor(m => m.ProductNames[i])
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.Prices[i])$
+                    @Html.HiddenFor(m => m.Prices[i])
+                </td>
+
+
+                @Html.HiddenFor(m => m.ProductIds[i])
+
+                <td>
+
+                    @Html.EditorFor(m => m.Quantities[i], new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.Quantities[i], "", new { @class = "text-danger" })
+                </td>
+
+                <td>
+                    @Html.CheckBoxFor(m => m.AddToCarts[i], new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.AddToCarts[i], "", new { @class = "text-danger" })
+                </td>
+
+            </tr>
+        }
+    </table>
+    <table>
+        <tr>
+            <th>Total Cost</th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(m => m.TotalCost)
+                @Html.HiddenFor(m => m.TotalCost)
+            </td>
+        </tr>
+    </table>
+
+    <div class="container">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td colspan="1">
+                        <form class="well form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">First Name</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group "><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>@Html.DisplayFor(v => v.FirstName)</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Last Name</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group "><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>@Html.DisplayFor(v => v.LastName)</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Adress</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group "><span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>@Html.DisplayFor(v => v.Address)</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">City</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group "><span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>@Html.DisplayFor(v => v.City)</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Postal Code</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group "><span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>@Html.DisplayFor(v => v.PostalCode)</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Country</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group "><span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>@Html.DisplayFor(v => v.Country)</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">E mail</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group "><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>@Html.DisplayFor(v => v.Email)</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Phone Number</label>
+                                    <div class="col-md-8 inputGroupContainer">
+                                        <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span> @Html.DisplayFor(v => v.PhoneNumber)</div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Confirm" class="btn btn-default" />
+        </div>
+    </div>
+}
+

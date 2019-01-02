@@ -1,0 +1,19 @@
+﻿@model OilTeamProject.ViewModels.EvaluationsData
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Questions"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Question)
+        @Html.TextBoxFor(m => m.Question.Text, new { @class = "form-control", autofocus = "autofocus" })
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+

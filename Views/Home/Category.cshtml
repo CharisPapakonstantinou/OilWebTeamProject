@@ -1,0 +1,67 @@
+﻿@model OilTeamProject.Models.Products.Category
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> @Html.DisplayFor(Model => Model.Name)</h2>
+
+@Html.Raw(Model.Description)
+<hr />
+<div class="row">
+    @foreach (var product in ViewBag.Products)
+    {
+        <div class="col-md-3 column productbox">
+            <a href="/home/product/@product.Slug">
+                <img src="../../Image/@Url.Content(product.Thumbnail)" class="center">
+            </a>
+            <a href="/home/product/@product.Slug"><h4 class="text-center">@Html.Raw(product.Name)</h4></a>
+            @if (product.Discount == 0)
+            {
+                <div class=""><h4 class="pull-right">&euro; @product.Price</h4></div>
+            }
+            else
+            {
+                <h4 class="pull-left"><del>&euro; @product.Price</del></h4>
+                <div class=""><h4 class="pull-right">&euro; @product.DiscountedPrice</h4></div>
+            }
+            <button class="addtocart btn btn-block" id="@product.ID">
+                <i class="fa fa-cart-plus mr-5"></i> Στο καλαθι
+            </button>
+        </div>
+    }
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+        $(function () {
+
+        ////////////////////////////////////////////////////////
+
+        /*
+        * Add to cart
+        */
+
+            $("button.addtocart").click(function () {
+
+            var url = "/cart/AddToCartPartial";
+            console.log(url);
+            var ID = $(this).attr("id");
+
+            $.get(url, { id: ID }, function (data) {
+                $(".ajaxcart").html(data);
+            }).done(function () {
+                toastr.success("Το προιον προστέθηκε στο καλάθι")
+            });
+        });
+
+        ////////////////////////////////////////////////////////
+
+    });
+    </script>
+
+}

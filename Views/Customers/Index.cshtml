@@ -1,0 +1,170 @@
+﻿@model PagedList.IPagedList<CustomerApp.ViewModels.CustomerBasicDetailsViewModel>
+@using PagedList.Mvc;
+
+@{
+	ViewBag.Title = "Customers";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+<blockquote>
+	<p>
+		@Html.ActionLink("Create New Customer", "Create")
+	</p>
+</blockquote>
+
+<hr />
+
+@using (Html.BeginForm("Index", "Customers", FormMethod.Get))
+{
+	<div class="form-inline">
+		@Html.TextBox("searchString", ViewBag.CurrentFilter as String, new { @placeholder = "Search Customer", @class = "form-control" })
+		<button type="submit" class="glyphicon glyphicon-search aria-hidden=true btn btn-default" />
+	</div>
+}
+
+@if (!String.IsNullOrWhiteSpace(ViewBag.CurrentFilter as String))
+{
+	<br />
+	<div class="breadcrumb">
+		<strong> @Html.DisplayFor(model => model.Count) Result(s) </strong>
+	</div>
+}
+
+<br />
+<table class="table table-bordered table table-hover">
+
+	<tr class="active">
+
+		<th class="text-center">
+			@Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParam, currentFilter = ViewBag.CurrentFilter })
+		</th>
+
+		<th class="text-center">
+			@Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParam, currentFilter = ViewBag.CurrentFilter })
+		</th>
+
+		<th class="text-center">
+			@Html.ActionLink("Company Name", "Index", new { sortOrder = ViewBag.CompanyNameSortParam, currentFilter = ViewBag.CurrentFilter })
+		</th>
+
+		<th class="text-center">
+			@Html.ActionLink("Country", "Index", new { sortOrder = ViewBag.CountrySortParam, currentFilter = ViewBag.CurrentFilter })
+		</th>
+		<th class="text-center">
+			Orders
+		</th>
+
+		<th class="text-center">
+			Membership
+		</th>
+
+		<th class="text-center">
+			Account
+		</th>
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.FirstName)
+			</td>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.LastName)
+			</td>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.CompanyName)
+			</td>
+
+			<td>
+				@Html.DisplayFor(modelItem => item.Country)
+			</td>
+
+			<td class="text-center">
+				@Html.ActionLink("New Order", "Create", "Orders", new { id = item.CustomerID }, new { @class = "btn btn-primary btn-xs" })
+
+
+				@Html.ActionLink("Orders History", "OrdersHistory", new { id = item.CustomerID }, new { @class = "btn btn-info btn-xs" })
+
+			</td>
+			@if (item.MemberCard == null)
+			{
+				<td class="text-center">
+					<button data-customer-id="@item.CustomerID" class="btn btn-success btn-sm js-create-membercard">
+						<span class="glyphicon glyphicon-credit-card"></span>
+						Add a memberCard
+					</button>
+				</td>
+			}
+			else
+			{
+				<td class="text-center">
+					<p class="badge alert-success">Already a Member</p>
+				</td>
+			}
+
+			<td class="text-center">
+				@Html.ActionLink("View Profile", "CustomerProfile", new { id = item.CustomerID })
+			</td>
+
+		</tr>
+	}
+</table>
+
+<br />
+<hr />
+<div class="container">
+	<div class="row row-centered text-center">
+		Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+		@Html.PagedListPager(Model, page => Url.Action("Index",
+			new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))
+	</div>
+</div>
+@section scripts
+{
+	<script>
+		$(document).ready(function () {
+
+			$(".js-create-membercard").click(function (e) {
+				var button = $(e.target);
+
+				bootbox.dialog({
+					title: 'Confirm',
+					message: "<h4>Are you sure you want to create a membercard?</h4>",
+
+					buttons: {
+						no: {
+							label: "No",
+							className: 'btn-default',
+							callback: function () {
+								bootbox.hideAll();
+							}
+						},
+						yes: {
+							label: "Yes",
+							className: 'btn-success',
+							callback: function () {
+								$.ajax({
+									url: "/api/membercards/create/" + button.attr("data-customer-id"),
+									method: "POST"
+								})
+									.done(function () {
+										window.location.href = '/Customers/Index/';
+									})
+									.fail(function () {
+										alert("Something failed.")
+									});
+							}
+						}
+					}
+				});
+			});
+		});
+	</script>
+}
+

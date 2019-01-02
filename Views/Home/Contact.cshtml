@@ -1,0 +1,121 @@
+﻿@model OilTeamProject.Models.Products.Message
+
+@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+<div class="google-map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3144.84532830349!2d23.73003441532357!3d37.98073877972238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd3a30930c71%3A0x771a9753ae7cf0fc!2zzqDOsc69zrXPgM65z4PPhM63zrzOr86_z4UgMzksIM6RzrjOrs69zrEgMTA1IDY0!5e0!3m2!1sel!2sgr!4v1543456355173" width="1300" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="su-column-inner su-clearfix">
+            <h2>ΣΤΟΙΧΕΙΑ ΕΠΙΚΟΙΝΩΝΙΑΣ</h2>
+            <img src="http://sqssa.gr/wp-content/uploads/2018/05/location_map_pin_light_green6-1.png" alt="Αποτέλεσμα εικόνας για home icon" width="22" height="28">&nbsp;
+
+            <span>&nbsp;&nbsp;Πανεπιστημίου 39, 1ος όροφος,Τ.Κ. 10564, Αθήνα</span>&nbsp;
+            <br><br>
+            <img src="http://sqssa.gr/wp-content/uploads/2018/05/Phone.png" alt="Αποτέλεσμα εικόνας για tel icon" width="24" height="24">&nbsp; &nbsp;<span>+30 210 37 29 070&nbsp;</span>
+            <br><br>
+
+            <img src="http://sqssa.gr/wp-content/uploads/2018/05/email_icon.png" alt="Αποτέλεσμα εικόνας για fax icon green" width="28" height="28">&nbsp;<span><strong><a href="mailto:hello@afdemp.org">&nbsp;hello@afdemp.org</a></strong></span>
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2>ΦΟΡΜΑ ΕΠΙΚΟΙΝΩΝΙΑΣ</h2>
+        <div class="success-message text-white text-center">
+            <i id="spinner" class="fa fa-circle-o-notch fa-5x fa-spin" aria-hidden="true" style="display:none;"></i>
+            <div id="suc-message" style="display:none;">
+                <img alt="" src="../Image/success.svg" style="width:100px;" />
+                <p class="margin-top">Το μήνυμα σας έχει αποσταλεί επιτυχώς<br>θα επικοινωνήσουμε μαζι σας το συντομότερο δυνατό</p>
+            </div>
+        </div>
+        @using (Html.BeginForm("Create", "Messages", FormMethod.Post, htmlAttributes: new { @id = "message-form" }))
+        {
+            @Html.AntiForgeryToken() <div class="form-horizontal">
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sender, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Sender, new { htmlAttributes = new { @class = "form-control", @id = "contactName" } })
+                        @Html.ValidationMessageFor(model => model.Sender, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "contactEmail" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control", @id = "contactPhone" } })
+                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextArea("Content", new { rows = 10, columns = 40, @class = "form-control", @id = "message" })
+                        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            var baseURL = window.location.protocol + "//" + window.location.host + "/";
+            console.log(baseURL + "api/messages");
+            function msgSent() {
+                setTimeout(function () {
+                    $("#spinner").hide();
+                    $("#message-form").css('opacity', '0');
+                    $("#suc-message").show();
+                }, 2000);
+            }
+
+            $("#message-form").submit(function (e) {
+                e.preventDefault();
+                    $("#message-form").css('opacity', '0.3');
+                    $("#spinner").show();
+                    $.post(baseURL+"api/messages", {
+                        Sender: $("#contactName").val(),
+                        Email: $("#contactEmail").val(),
+                        Mobile: $("#contactPhone").val(),
+                        Content: $("#message").val(),
+                        IsReaded: false,
+                    }).done(function (data) {
+                        msgSent();
+                    });
+
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,79 @@
+﻿@model OilTeamProject.ViewModels.OrderFormViewModel
+
+
+@using (Html.BeginForm("Create", "Orders"))
+{
+
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(M => M.OrderId)
+    @Html.HiddenFor(M => M.OrderDate)
+    @Html.HiddenFor(m => m.Count)
+    @Html.HiddenFor(m => m.CustomerId)
+
+    <div class="container">
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th style="width:50%">Product</th>
+                    <th style="width:10%">Price</th>
+                    <th style="width:8%">Quantity</th>
+                    <th style="width:10%">Add To Cart</th>
+                    @*<th style="width:10%"></th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td data-th="Product">
+                            <div class="row">
+                                <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive" /></div>
+                                <div class="col-sm-10">
+                                    <h4 class="nomargin">
+                                        @Html.DisplayFor(m => m.ProductNames[i])
+                                        @Html.HiddenFor(m => m.ProductNames[i])
+                                    </h4>
+                                    <p> @Html.DisplayFor(m => m.Descriptions[i]) </p>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-th="Price">
+                            @Html.DisplayFor(m => m.Prices[i])
+                            @Html.HiddenFor(m => m.Prices[i])
+                        </td>
+                        @Html.HiddenFor(m => m.ProductStockIds[i])
+
+                        <td data-th="Quantity">
+                            @Html.EditorFor(m => m.Quantities[i], new { htmlAttributes = new { @class = "form-control" } })
+                        </td>
+
+
+
+                        <td class="actions" align="center" data-th="Add To Cart">
+                            @Html.CheckBoxFor(m => m.AddToCarts[i])
+
+                        </td>
+
+                        @*<td class="actions" data-th="">
+                                <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                            </td>*@
+                    </tr>
+                }
+
+            </tbody>
+
+            <tfoot>
+
+                <tr>
+
+                    <td>@Html.ActionLink("Continiue Shopping", "Index", "Customers", new { @class = "btn btn-warning" })@*<a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>*@
+                    <td colspan="2" class="hidden-xs"></td>
+
+                    <td><input type="submit" class="btn btn-success btn-block" value="Checkout" /> </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+}

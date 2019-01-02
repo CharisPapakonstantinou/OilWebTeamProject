@@ -1,0 +1,128 @@
+﻿@model  OilTeamProject.ViewModels.OrderFormViewModel
+@{
+    /**/
+
+    ViewBag.Title = "BuyProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("EditDetails", "Orders"))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(Model => Model.OrderId)
+    <table class="table">
+        <tr>
+            <th>
+                Product Discription
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Buy
+            </th>
+
+            <th></th>
+        </tr>
+
+        @Html.HiddenFor(m => m.Count)
+        @for (int i = 0; i < Model.Count; i++)
+
+        {
+            <tr>
+                <td>
+
+                    @Html.DisplayFor(m => m.ProductNames[i])
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.Prices[i])$
+                    @Html.HiddenFor(m => m.Prices[i])
+                </td>
+
+                @Html.HiddenFor(M => M.ProductStockIds[i])
+                <td>
+
+
+
+
+
+                    <div class="form-group">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(Model => Model.OrderId)
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                @*<input name="SelectedProducts" type="number" value="@item.Quantity" />*@
+                                @Html.EditorFor(m => m.Quantities[i], new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.Quantities[i], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+
+                <td>
+                    <div class="form-group">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+
+                            <div class="col-md-10">
+                                @*<input type="checkbox" name="SelectedProducts" value="@item.ProductID" @(Html.Raw(item.Buy ? "checked=\"checked\"" : ""))>*@
+                                @Html.CheckBoxFor(m => m.AddToCarts[i], new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.AddToCarts[i], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+
+
+            </tr>
+
+        }
+
+
+
+
+
+
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Details", new { id = Model.OrderId })
+
+</div>

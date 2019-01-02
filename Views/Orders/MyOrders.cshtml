@@ -1,0 +1,75 @@
+﻿@model IEnumerable<OilTeamProject.Models.Customers.Order>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (!ViewBag.EmptyList)
+{
+    <h2>My Orders</h2>
+    <hr />
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th class="text-center">
+                Order Number
+            </th>
+            <th class="text-center">
+                Order Date
+            </th>
+            <th class="text-center">
+                Status
+            </th>
+            <th class="text-center">
+                Payment Date
+            </th>
+            <th class="text-center">
+                Total Cost
+            </th>
+        </tr>
+      
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => order.OrderNumber)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(m => order.CreationDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(m => order.Status)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(m => order.PaymentDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(m => order.TotalCost)
+                    @Html.HiddenFor(m => order.CustomerId)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = order.OrderID })|
+                    @Html.ActionLink("Delete", "Delete", new { id = order.OrderID })|
+                    @Html.ActionLink("Details", "Details", new { id = order.OrderID })
+                </td>
+            </tr>
+        }
+    </table>
+    <p>
+        @Html.ActionLink("Back to List", "Index", "Customers", new { id = ViewBag.Customerid },null)
+    </p>
+}
+else
+{
+    <div>
+        <h1>
+            No Orders
+        </h1>
+
+        @Html.ActionLink("Click Here to create An Order", "Create", new { id = ViewBag.CustomerId })
+    </div>
+}

@@ -1,0 +1,512 @@
+﻿@model OilTeamProject.ViewModels.CustomerProfileViewModel
+
+@{
+	ViewBag.Title = "Profile";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>@Html.DisplayFor(m => m.FullName)</h2>
+
+<div class="container">
+	<div class="row">
+
+		<div class="col-sm-3">
+
+			<div class="text-center">
+
+				<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+				<h6>Upload a different photo...</h6>
+				<input type="file" class="text-center center-block file-upload">
+
+			</div>
+			<hr />
+			<br>
+
+			<ul class="list-group">
+
+				<li class="list-group-item text-muted">
+					Orders
+				</li>
+
+
+				<li class="list-group-item text-right">
+					<span class="pull-left">
+						<strong>
+							@Html.DisplayNameFor(m => m.FulfilledOrders)
+						</strong>
+					</span>
+					@Html.DisplayFor(m => m.FulfilledOrders)
+				</li>
+
+				<li class="list-group-item text-right">
+					<span class="pull-left">
+						<strong>
+							@Html.DisplayNameFor(m => m.DeletedOrders)
+						</strong>
+					</span>
+					@Html.DisplayFor(m => m.DeletedOrders)
+				</li>
+
+				<li class="list-group-item text-right">
+					<span class="pull-left">
+						<strong>
+							@Html.DisplayNameFor(m => m.InProgressOrders)
+						</strong>
+					</span>
+					@Html.DisplayFor(m => m.InProgressOrders)
+				</li>
+
+				<li class="list-group-item text-right">
+					<span class="pull-left">
+						<strong>
+							@Html.DisplayNameFor(m => m.TotalOrders)
+						</strong>
+					</span>
+					@Html.DisplayFor(m => m.TotalOrders)
+				</li>
+
+			</ul>
+
+
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="col-md-6">
+
+						<span>
+							<a href="@Url.Action("OrdersHistory", "Customers" , new { id=Model.CustomerID } )" class="btn btn-info">
+								Show Orders
+							</a>
+						</span>
+
+					</div>
+
+					<div class="col-md-6">
+
+						<span>
+							<a href="@Url.Action("Create", "Orders" , new { id=Model.CustomerID } )" class="btn btn-primary">
+								New Order
+							</a>
+						</span>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="col-sm-9">
+			<ul class="nav nav-tabs">
+
+				<li class="active">
+					<a data-toggle="tab" href="#profile">
+						Personal Details
+					</a>
+				</li>
+				<li>
+					<a data-toggle="tab" href="#membership">
+						Membership
+					</a>
+				</li>
+
+			</ul>
+
+			<div class="tab-content">
+
+				<div class="tab-pane active" id="profile">
+					<hr>
+					<form class="form">
+
+						<div class="form-group">
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.FirstName)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.FirstName)
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-xs-6">
+
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.LastName)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.LastName)
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.Gender)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.Gender)
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.DateOfBirth)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.DateOfBirth)
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.CompanyName)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.CompanyName)
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.CompanyType)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.CompanyType)
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.Country)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.Country)
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.City)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.City)
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.Address)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.Address)
+								</label>
+							</div>
+						</div>
+
+						<div class="form-group">
+
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.PostalCode)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.PostalCode)
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.PhoneNumber)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.PhoneNumber)
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<div class="col-xs-6">
+								<label class="h4">
+									@Html.DisplayNameFor(model => model.Email)
+								</label>
+								<label type="text" class="form-control">
+									@Html.DisplayFor(model => model.Email)
+								</label>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<div class="col-xs-12">
+								<br>
+
+								<span class="actions">
+
+									<a href="@Url.Action("Edit", "Customers", new { id = Model.CustomerID})" class="btn  btn-warning">
+										<span class="glyphicon glyphicon-edit"></span>
+										Edit
+									</a>
+
+								</span>
+
+								<span class="actions">
+
+									<a href="#" data-customer-id="@Model.CustomerID" class="btn btn-danger js-remove-customer">
+										<span class="glyphicon glyphicon-trash"></span>
+										Remove
+									</a>
+
+								</span>
+
+								<span class="actions">
+
+									<a href="#" data-customer-id="@Model.CustomerID" class="btn btn-danger js-delete-customer">
+										<span class="glyphicon glyphicon-remove"></span>
+										Delete
+									</a>
+
+								</span>
+
+							</div>
+						</div>
+
+					</form>
+
+					<hr>
+
+				</div>
+
+				<div class="tab-pane" id="membership">
+					<hr>
+
+					@if (Model.MemberCard == null)
+					{
+					<div class="row text-center">
+						
+						<a href=@Url.Action("Create", "MemberCards", new { id = Model.CustomerID}) class="btn btn-success js-create-membercard">
+							<span class="glyphicon glyphicon-credit-card"></span>
+							Create memberCard
+						</a>
+					</div>
+					}
+					else
+					{
+						<form class="form">
+
+							<div class="form-group">
+								<div class="col-xs-6">
+									<label class="h4">
+										@Html.DisplayNameFor(model => model.MemberCard.CreationDate)
+									</label>
+									<label type="text" class="form-control">
+										@Html.DisplayFor(model => model.MemberCard.CreationDate)
+									</label>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-xs-6">
+
+									<label class="h4">
+										@Html.DisplayNameFor(model => model.MemberCard.MemberCardCode)
+									</label>
+									<label type="text" class="form-control">
+										@Html.DisplayFor(model => model.MemberCard.MemberCardCode)
+									</label>
+								</div>
+							</div>
+
+							<div class="form-group">
+
+								<div class="col-xs-6">
+									<label class="h4">
+										@Html.DisplayNameFor(model => model.MemberCard.Type)
+									</label>
+									<label type="text" class="form-control">
+										@Html.DisplayFor(model => model.MemberCard.Type)
+									</label>
+								</div>
+							</div>
+
+							<div class="form-group">
+
+								<div class="col-xs-6">
+									<label class="h4">
+										@Html.DisplayNameFor(model => model.MemberCard.Credits)
+									</label>
+									<label type="text" class="form-control">
+										@Html.DisplayFor(model => model.MemberCard.Credits)
+									</label>
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<div class="col-xs-12">
+									<br>
+
+									<span class="actions">
+										<a href="#" data-customer-id="@Model.CustomerID" class="btn btn-danger js-delete-membercard">
+											<span class="glyphicon glyphicon-remove"></span>
+											Delete
+										</a>
+										@*@*<a href="@Url.Action("Delete", "MemberCards", new { id = Model.CustomerID})" class="btn btn-danger js-delete-membercard">*@
+										@*<span class="glyphicon glyphicon-trash"></span>
+										Delete
+										</a>*@
+
+									</span>
+								</div>
+							</div>
+
+						</form>
+
+					}
+					<hr>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+@section scripts
+{
+	<script>
+		$(document).ready(function (){
+
+			$(".js-remove-customer").click(function (e) {
+				var link = $(e.target);
+
+				bootbox.dialog({
+					title: 'Confirm',
+					message: "<h4>Are you sure you want to remove this customer?</h4>",
+
+					buttons: {
+						no: {
+							label: "No",
+							className: 'btn-default',
+							callback: function () {
+								bootbox.hideAll();
+							}
+						},
+						yes: {
+							label: "Yes",
+							className: 'btn-danger',
+							callback: function () {
+								$.ajax({
+									url: "/api/customers/remove/" + link.attr("data-customer-id"),
+									method: "POST"
+								})
+									.done(function () {
+										window.location.href = '/Customers/Index/';
+										//alert("The customer was removed successfully.")
+									})
+									.fail(function () {
+										alert("Something failed")
+									});
+							}
+						}
+					}
+				});
+			});
+
+			$(".js-delete-customer").click(function (e) {
+				var link = $(e.target);
+
+				bootbox.dialog({
+					title: 'Confirm',
+					message: "<h4>Are you sure you want to delete this customer?</h4>",
+
+					buttons: {
+						no: {
+							label: "No",
+							className: 'btn-default',
+							callback: function () {
+								bootbox.hideAll();
+							}
+						},
+						yes: {
+							label: "Yes",
+							className: 'btn-danger',
+							callback: function () {
+								$.ajax({
+									url: "/api/customers/delete/" + link.attr("data-customer-id"),
+									method: "POST"
+								})
+									.done(function () {
+										window.location.href = '/Customers/Index/';
+									})
+									.fail(function () {
+										alert("Something failed.")
+									});
+							}
+						}
+					}
+				});
+			});
+
+			$(".js-delete-membercard").click(function (e) {
+				var link = $(e.target);
+
+				bootbox.dialog({
+					title: 'Confirm',
+					message: "<h4>Are you sure you want to delete this membercard?</h4>",
+
+					buttons: {
+						no: {
+							label: "No",
+							className: 'btn-default',
+							callback: function () {
+								bootbox.hideAll();
+							}
+						},
+						yes: {
+							label: "Yes",
+							className: 'btn-danger',
+							callback: function () {
+								$.ajax({
+									url: "/api/membercards/delete/" + link.attr("data-customer-id"),
+									method: "POST"
+								})
+									.done(function () {
+										window.location.href = '/Customers/Index/';
+									})
+									.fail(function () {
+										alert("Something failed.")
+									});
+							}
+						}
+					}
+				});
+			});
+		});
+
+	</script>
+}   
+
+
+
+

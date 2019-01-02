@@ -1,0 +1,35 @@
+﻿@model OilTeamProject.Models.Customers.Order
+@{
+    /**/
+
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Orders"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.OrderID)
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentDate)
+        @Html.TextBoxFor(m => m.PaymentDate, new { @class = "form-control", autofocus = "autofocus" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreationDate)
+        @Html.TextBoxFor(m => m.CreationDate, new { @class = "form-control", autofocus = "autofocus" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Type)
+        @Html.EnumDropDownListFor(m => m.Type, new { @class = "form-control", autofocus = "autofocus" })
+    </div>
+
+}
+
+
+

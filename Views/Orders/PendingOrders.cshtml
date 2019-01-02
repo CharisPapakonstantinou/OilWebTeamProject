@@ -1,0 +1,76 @@
+﻿@model List<OilTeamProject.Models.Customers.Order>
+
+
+
+
+@if (ViewBag.ListCount == 0)
+{
+    <h1 class="alert-info">You dont have any Unpaid Orders</h1>
+}
+else
+{
+    <h1 class="warning">You have Pending Orders</h1>
+
+    <table class="table table-bordered table table-hover">
+        <tr class="active">
+            <th class="text-center">
+                @Html.ActionLink("Number", "OrdersHistory", new { sortOrder = ViewBag.OrderNumberSortParam, currentFilter = ViewBag.OrderCurrentFilter })
+            </th>
+            <th class="text-center">
+                @Html.ActionLink("Type", "OrdersHistory", new { sortOrder = ViewBag.OrderTypeSortParam, currentFilter = ViewBag.OrderCurrentFilter })
+            </th>
+            <th class="text-center">
+                @Html.ActionLink("Status", "OrdersHistory", new { sortOrder = ViewBag.OrderStatusSortParam, currentFilter = ViewBag.OrderCurrentFilter })
+            </th>
+            <th class="text-center">
+                @Html.ActionLink("Date", "OrdersHistory", new { sortOrder = ViewBag.OrderDateSortParam, currentFilter = ViewBag.OrderCurrentFilter })
+            </th>
+            <th class="text-center">
+                @Html.ActionLink("Payment Date", "OrdersHistory", new { sortOrder = ViewBag.OrderPaymentDateSortParam, currentFilter = ViewBag.OrderCurrentFilter })
+            </th>
+            <th class="text-center">
+                @Html.ActionLink("Paid Off", "OrdersHistory", new { sortOrder = ViewBag.OrderPaidOffSortParam, currentFilter = ViewBag.OrderCurrentFilter })
+            </th>
+            <th class="text-center">
+                @Html.ActionLink("Payment Type", "OrdersHistory", new { sortOrder = ViewBag.OrderPaymentSortParam, currentFilter = ViewBag.OrderCurrentFilter })
+            </th>
+        </tr>
+
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentDate)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.PaidOff)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaymentType)
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Details", "Details", new { id = item.OrderID })
+                        @Html.ActionLink("Pay Now", "PayOff", new { id = item.OrderID })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+}
+
+
+

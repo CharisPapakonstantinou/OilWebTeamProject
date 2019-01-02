@@ -1,0 +1,109 @@
+﻿@model OilTeamProject.Models.Products.Product
+@{
+    ViewBag.Title = "Product - " + @Html.DisplayFor(model => model.Name);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Product</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="/home/category/@ViewBag.Category.CategoryID">@ViewBag.Category.Name</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Html.DisplayFor(model => model.Name)</li>
+    </ol>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div class="container-fliud">
+            <div class="wrapper row">
+                <div class="preview col-md-6">
+
+                    <div class="preview-pic tab-content">
+                        <div class="tab-pane active" id="pic-0"><img src="../../Image/@Url.Content(Model.Thumbnail)" /></div>
+                        @foreach (var pic in ViewBag.Images)
+                        {
+                            <div class="tab-pane" id="pic-@pic.ID"><img src="../../Image/@Url.Content(pic.Title)" /></div>
+
+                        }
+                    </div>
+                    <ul class="preview-thumbnail nav nav-tabs">
+                        <li class="active"><a data-target="#pic-0" data-toggle="tab"><img src="../../Image/@Url.Content(Model.Thumbnail)" /></a></li>
+
+
+                        @foreach (var pic in ViewBag.Images)
+                        {
+                            <li><a data-target="#pic-@pic.ID" data-toggle="tab"><img src="../../Image/@Url.Content(pic.Title)" /></a></li>
+                        }
+                    </ul>
+
+                </div>
+                <div class="details col-md-6">
+                    <h3 class="product-title">@Html.DisplayFor(model => model.Name)</h3>
+                    <div class="rating">
+                        <div class="stars">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+
+                        <h4 class="price">Κατηγορια: @ViewBag.Category.Name</h4>
+                        <span class="review-no">41 reviews</span>
+                    </div>
+                    <p class="product-description">@Html.Raw(Model.Description)</p>
+                    <h4 class="price">τιμη: <span>&euro; @Html.DisplayFor(model => model.Price)</span></h4>
+                    <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+                    <h5 class="sizes">
+                        Συσκευασια:
+                        <span class="size">@ViewBag.Package.Name</span>
+                    </h5>
+                    <h5 class="colors">
+                        Barcode: @Html.DisplayFor(model => model.BarCode)
+
+                    </h5>
+                    <div class="action">
+                        <button class="addtocart add-to-cart btn btn-default" id="@Html.DisplayFor(model => model.ID)">
+                            Στο καλαθι
+                        </button>
+                        <a href="/products/payment" class="add-to-cart btn btn-default">αγορα</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+    <script>
+        $(function () {
+
+        ////////////////////////////////////////////////////////
+
+        /*
+        * Add to cart
+        */
+
+            $("button.addtocart").click(function () {
+
+            var url = "/cart/AddToCartPartial";
+            console.log(url);
+            var ID = $(this).attr("id");
+
+            $.get(url, { id: ID }, function (data) {
+                $(".ajaxcart").html(data);
+            }).done(function () {
+                toastr.success("Το προιον προστέθηκε στο καλάθι")
+            });
+        });
+
+        ////////////////////////////////////////////////////////
+
+    });
+    </script>
+
+}

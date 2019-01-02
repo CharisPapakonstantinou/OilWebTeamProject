@@ -1,0 +1,80 @@
+﻿
+@model OilTeamProject.ViewModels.OrderFormViewModel
+
+@{
+                /**/
+
+                ViewBag.Title = "Create";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+
+@using (Html.BeginForm("Create", "Orders"))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Product Description
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Add to Cart
+            </th>
+
+
+        </tr>
+        @Html.HiddenFor(M => M.OrderId)
+        @Html.HiddenFor(M => M.OrderDate)
+        @Html.HiddenFor(m => m.Count)
+        @Html.HiddenFor(m => m.CustomerId)
+        @for (int i = 0; i < Model.Count; i++)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => m.ProductNames[i])
+                    @Html.HiddenFor(m => m.ProductNames[i])
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.Prices[i])$
+                    @Html.HiddenFor(m => m.Prices[i])
+                </td>
+
+
+                @Html.HiddenFor(m => m.ProductStockIds[i])
+
+                <td>
+
+                    @Html.EditorFor(m => m.Quantities[i], new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.Quantities[i], "", new { @class = "text-danger" })
+                </td>
+
+                <td>
+                    @Html.CheckBoxFor(m => m.AddToCarts[i], new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.AddToCarts[i], "", new { @class = "text-danger" })
+                </td>
+
+            </tr>
+        }
+    </table>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+}

@@ -1,0 +1,10 @@
+﻿@model OilTeamProject.ViewModels.CartViewModel
+
+@if (HttpContext.Current.Request.Url.AbsolutePath != "/Cart")
+{
+    <div class="ajaxcart" style="color:white;">
+        <i class="fas fa-cart-plus"></i>
+        Your cart: @Model.Quantity item(s) - &euro;@Model.GrandTotal
+        @Html.ActionLink("Checkout", "Index")
+    </div>
+}

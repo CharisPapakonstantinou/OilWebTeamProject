@@ -1,0 +1,23 @@
+﻿@model OilTeamProject.Models.Customers.CreditCard
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+<ul>
+    <li>@Model.CreditCardNumber</li>
+    <li>@Model.Type</li>
+    <li>@Model.Customer.FullName</li>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions alert">
+            <input type="submit" value=" Delete" class="btn btn-warning alert-danger" />
+            @Html.ActionLink("Back", "Details", "Customers")
+        </div>
+
+    }
+
+</ul>

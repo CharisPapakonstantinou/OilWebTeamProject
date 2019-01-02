@@ -1,0 +1,44 @@
+﻿@model OilTeamProject.ViewModels.CreditCardFormViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Credit Card</h2>
+
+<hr />
+
+@using (Html.BeginForm("Create", "CreditCards"))
+ {
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.CustomerID)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Type)
+        @Html.EnumDropDownListFor(m => m.Type, "-Select-", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardNumber)
+        @Html.TextBoxFor(m => m.CreditCardNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardNumber, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ExpMo)
+        @Html.TextBoxFor(m => m.ExpMo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ExpMo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ExpYr)
+        @Html.TextBoxFor(m => m.ExpYr, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ExpYr, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+ }
+

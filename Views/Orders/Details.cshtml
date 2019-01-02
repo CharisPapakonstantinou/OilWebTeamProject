@@ -1,0 +1,92 @@
+﻿@model OilTeamProject.Models.Customers.Order
+
+@{
+                /**/
+
+                /**/
+
+                ViewBag.Title = "Details";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+
+
+
+        <div>
+            Order Summary:
+        </div>
+
+        <dt>
+            OrderNumber
+        </dt>
+
+        @*<dd>@Html.DisplayFor(m => m.OrderNumber) </dd>
+            <dt>Payment Date</dt>
+            <dd>@Html.DisplayFor(m => m.PaymentDate)</dd>
+            <dt>Order Date</dt>
+            <dd>@Html.DisplayFor(m => m.Date)</dd>*@
+
+
+
+
+        <dd>
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Product Discription
+                    </th>
+
+                    <th>
+                        Product Price
+                    </th>
+
+                    <th>
+                        Quantity
+                    </th>
+
+                </tr>
+                @Html.HiddenFor(m => m.CustomerId)
+                @foreach (var item in Model.OrderProducts)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayFor(modelitem => item.ProductStock.Product.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(modelitem => item.ProductStock.Product.Description)
+                        </th>
+
+                        <th>
+                            @Html.DisplayFor(modelitem => item.ProductStock.Product.Price)
+                        </th>
+                        <th>
+                            @Html.DisplayFor(modelitem => item.Quantity)
+                        </th>
+                    </tr>
+                }
+            </table>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit Details", "EditDetails", new { id = Model.OrderID }) |
+    @Html.ActionLink("Back to List", "MyOrders", new { id = Model.CustomerId })
+</p>

@@ -1,0 +1,21 @@
+﻿@model OilTeamProject.Models.Customers.MemberCard
+@{ 
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create new MemberCard</h2>
+@using (Html.BeginForm("Create", "MemberCards"))
+{   
+        <label>
+            @Html.CheckBoxFor(m => m.NewsLetter)
+            Subscribed to Newsletter
+        </label>
+		<hr />
+    @*</div>*@
+    <button type="submit" class="btn btn-primary">Generate Code</button>
+}
+
+
+
+

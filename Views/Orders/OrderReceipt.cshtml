@@ -1,0 +1,166 @@
+﻿@model OilTeamProject.ViewModels.OrderDetailsFormViewModel
+
+
+
+@using (Html.BeginForm(Model.Action, "Orders"))
+{
+    @Html.HiddenFor(M => M.OrderId)
+    @Html.HiddenFor(M => M.OrderDate)
+    @Html.HiddenFor(m => m.Count)
+    @Html.HiddenFor(m => m.CustomerId)
+    @Html.HiddenFor(m => m.OrderNumber)
+    @Html.HiddenFor(m => m.City)
+    @Html.HiddenFor(m => m.Country)
+    @Html.HiddenFor(m => m.FirstName)
+    @Html.HiddenFor(m => m.LastName)
+    @Html.HiddenFor(m => m.PostalCode)
+    @Html.HiddenFor(m => m.PhoneNumber)
+    @Html.HiddenFor(m => m.Address)
+
+
+
+    <br />
+    if (Model.CartIsEmpty)
+    {
+        <h1 class="danger danger"> You dont have any products in your cart unable to proceed with the order</h1>
+    }
+    <div class="container">
+
+
+        <div class="well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <address>
+                        <strong>@Html.DisplayFor(m => m.FirstName)   @Html.DisplayFor(m => m.LastName)</strong>
+                        <br>
+                        @Html.DisplayFor(m => m.Address)
+                        <br>
+                        @Html.DisplayFor(m => m.City), @Html.DisplayFor(m => m.PostalCode)
+                        <br>
+                        <abbr title="Phone">P:</abbr> @Html.DisplayFor(m => m.PhoneNumber)
+                    </address>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+                    <p>
+                        <em>Date: @Html.DisplayFor(m => m.OrderDate)</em>
+                    </p>
+                    <p>
+                        <em>Receipt for Order #: @Html.DisplayFor(m => m.OrderNumber)</em>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <h1>Receipt</h1>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>#</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">SubTotal</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+
+                            @Html.HiddenFor(m => m.AddToCarts[i])
+                            @Html.HiddenFor(m => m.ProductNames[i])
+                            @Html.HiddenFor(m => m.Quantities[i])
+                            @Html.HiddenFor(m => m.Prices[i])
+                            @Html.HiddenFor(m => m.ProductStockIds[i]);
+                            if (!Model.AddToCarts[i] || Model.Quantities[i] == 0)
+                            {
+                                continue;
+                            }
+
+                            <tr>
+
+                                <td class="col-md-9">
+                                    <em>@Html.DisplayFor(m => m.ProductNames[i])</em>
+
+
+                                </td>
+
+
+                                <td class="col-md-1" style="text-align: center">
+                                    <em>@Html.DisplayFor(m => m.Quantities[i])</em>
+
+                                </td>
+
+                                <td class="col-md-1 text-center">
+                                    <em>@Html.DisplayFor(m => m.Prices[i])</em>
+
+
+                                </td>
+
+
+                                <td>
+                                    @Html.DisplayFor(m => m.SubTotal[i])
+                                </td>
+
+
+
+                            </tr>
+                        }
+
+
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+
+                            <td class="text-right">
+                                <p>
+                                    <strong>Subtotal: </strong>
+                                </p>
+                                <p>
+                                    <strong>Tax: </strong>
+                                </p>
+                            </td>
+                            <td class="text-center">
+                                <p>
+                                    <strong>$6.94</strong>
+                                </p>
+                                <p>
+                                    <strong>$6.94</strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>   </td>
+                            <td>   </td>
+                            <td class="text-right"><h4><strong>Total: </strong></h4></td>
+                            <td class="text-center text-danger">
+                                <h4>
+                                    <strong>
+                                        @Html.DisplayFor(m => m.TotalCost)
+                                        @Html.HiddenFor(m => m.TotalCost)
+                                    </strong>
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Payment Method :  @Html.EnumDropDownListFor(m => m.PaymentType, new { @class = "form-control" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <td>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">
+                        Order Now   <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+           
+                </td>
+            </div>
+        </div>
+
+
+    </div>
+
+
+}
